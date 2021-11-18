@@ -134,5 +134,35 @@ public class UserInput
         return currentMoney;
     }
 
+    public static List<VendingMachineItem> selectProduct(List<VendingMachineItem> vendingMachineItemList, BigDecimal currentMoney){
+
+        System.out.print("Please enter the product code of what you want: ");
+        Scanner userInput = new Scanner(System.in);
+        String productCode = userInput.nextLine();
+        boolean isFound = false;
+        for (int i = 0; i < vendingMachineItemList.size() && !isFound; i++) {
+            if(productCode.equals(vendingMachineItemList.get(i).getPosition())){
+                if(productCode.equals(vendingMachineItemList.get(i).getPosition()) && vendingMachineItemList.get(i).getStockAmount() == 0){
+                    System.out.print("Item is sold out!");
+                    UserInput.getPurchaseScreen(currentMoney);
+                    isFound = true;
+                } else if(productCode.equals(vendingMachineItemList.get(i).getPosition())){
+                    vendingMachineItemList.get(i).oneLessStockAmount();
+                    currentMoney = currentMoney.subtract(vendingMachineItemList.get(i).getPrice());
+                    System.out.println(vendingMachineItemList.get(i).getProductName() + " " + vendingMachineItemList.get(i).getPrice() + " " + currentMoney );
+                    System.out.println(vendingMachineItemList.get(i).getSound());
+                    isFound = true;
+                }
+            }
+        }
+
+        if(isFound == false){
+            System.out.println("Product code does not exist!");
+            UserInput.getPurchaseScreen(currentMoney);
+        }
+
+
+        return vendingMachineItemList;
+    }
 
 }

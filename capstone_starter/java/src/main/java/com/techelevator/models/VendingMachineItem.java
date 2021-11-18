@@ -53,5 +53,9 @@ public abstract class VendingMachineItem {
         this.stockAmount = stockAmount;
     }
 
+    public void oneLessStockAmount(){
+        this.stockAmount = this.stockAmount - 1;
+    }
+
     public abstract String getSound();
 }

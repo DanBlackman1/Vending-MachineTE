@@ -13,11 +13,12 @@ public class VendingMachine
 {
     public void run()
     {
+        BigDecimal currentMoney = new BigDecimal("0.00");
+        List<VendingMachineItem> vendingMachineItemList = new ArrayList<>();
+        UserInput.loadList(vendingMachineItemList);
         while(true)
         {
-            BigDecimal currentMoney = new BigDecimal("0.00");
-            List<VendingMachineItem> vendingMachineItemList = new ArrayList<>();
-            UserInput.loadList(vendingMachineItemList);
+
             UserOutput.displayHomeScreen();
             String choice = UserInput.getHomeScreenOption();
 
@@ -35,6 +36,11 @@ public class VendingMachine
                     currentMoney = UserInput.addMoney(purchaseChoice);
 
                 } else if (purchaseChoice.equals("Select Product")) {
+
+                    UserOutput.displayList(vendingMachineItemList);
+                    System.out.println();
+                    vendingMachineItemList =  UserInput.selectProduct(vendingMachineItemList, currentMoney);
+
 
 
 
