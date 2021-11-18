@@ -34,7 +34,7 @@ process menu:
     >```
 7. The purchase process flow is as follows:
     1. Selecting "(1) Feed Money" allows the customer to repeatedly feed money into the
-    machine in valid, whole dollar amounts—for example, $1, $2, $5, or $10.
+    machine in valid, whole dollar amounts (e.g. $1, $2, $5, or $10).
         - The "Current Money Provided" indicates how much money the customer
         has fed into the machine.
     2. Selecting "(2) Select Product" allows the customer to select a product to
