@@ -1,6 +1,12 @@
 package com.techelevator.ui;
 
+import com.techelevator.models.*;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -38,6 +44,33 @@ public class UserInput
                 return "";
         }
 
+    }
+
+    public static void loadList(List<VendingMachineItem> vendingMachineItemList){
+        File inputFile = new File("vendingmachine.csv");
+        try(Scanner inputScanner = new Scanner(inputFile)) {
+            while(inputScanner.hasNextLine()){
+                String line = inputScanner.nextLine();
+                String[] lineArray = line.split("\\|");
+                if(lineArray[3].contains("Chip")){
+                    Chips chips = new Chips(lineArray[0], lineArray[1], new BigDecimal (Double.parseDouble(lineArray[2])));
+                    vendingMachineItemList.add(chips);
+                } else if(lineArray[3].equals("Candy")){
+                    Candy candy = new Candy(lineArray[0], lineArray[1], new BigDecimal (Double.parseDouble(lineArray[2])));
+                    vendingMachineItemList.add(candy);
+                } else if(lineArray[3].equals("Drink")){
+                    Beverage beverage = new Beverage(lineArray[0], lineArray[1], new BigDecimal( (Double.parseDouble(lineArray[2]))));
+                    vendingMachineItemList.add(beverage);
+                } else if(lineArray[3].equals("Gum")){
+                    Gum gum = new Gum(lineArray[0], lineArray[1], new BigDecimal((Double.parseDouble(lineArray[2]))));
+                    vendingMachineItemList.add(gum);
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Error reading file!");
+            System.exit(1);
+        }
     }
 
     
