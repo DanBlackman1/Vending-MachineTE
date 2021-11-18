@@ -39,12 +39,14 @@ public class VendingMachine
 
                     UserOutput.displayList(vendingMachineItemList);
                     System.out.println();
-                    vendingMachineItemList =  UserInput.selectProduct(vendingMachineItemList, currentMoney);
+                    currentMoney =  UserInput.selectProduct(vendingMachineItemList, currentMoney);
 
 
 
 
                 } else if (purchaseChoice.equals("Finish Transaction")) {
+
+                    currentMoney = UserOutput.getChange(currentMoney);
 
                 }
 

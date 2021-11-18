@@ -134,7 +134,7 @@ public class UserInput
         return currentMoney;
     }
 
-    public static List<VendingMachineItem> selectProduct(List<VendingMachineItem> vendingMachineItemList, BigDecimal currentMoney){
+    public static BigDecimal selectProduct(List<VendingMachineItem> vendingMachineItemList, BigDecimal currentMoney){
 
         System.out.print("Please enter the product code of what you want: ");
         Scanner userInput = new Scanner(System.in);
@@ -162,7 +162,7 @@ public class UserInput
         }
 
 
-        return vendingMachineItemList;
+        return currentMoney;
     }
 
 }
