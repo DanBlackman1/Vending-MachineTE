@@ -1,5 +1,6 @@
 package com.techelevator.ui;
 
+import com.techelevator.application.VendingMachine;
 import com.techelevator.models.*;
 
 import java.io.File;
@@ -46,7 +47,7 @@ public class UserInput
 
     }
 
-    public static String getPurchaseScreen()
+    public static String getPurchaseScreen(BigDecimal currentMoney)
     {
         System.out.println("What would you like to do?");
         System.out.println();
@@ -56,10 +57,11 @@ public class UserInput
         System.out.println("3) Finish Transaction");
 
 
-        // call bigdecimal money calc method
-        System.out.println();
-        System.out.print("Current Money Provided: ");
 
+        System.out.println();
+        System.out.print("Current Money Provided: " + currentMoney);
+
+        System.out.print("Please select an option:" );
         String selectedOption = scanner.nextLine();
         String option = selectedOption.trim().toLowerCase();
 
@@ -103,5 +105,34 @@ public class UserInput
         }
     }
 
-    
+    public static BigDecimal addMoney(String purchaseChoice) {
+        boolean isDone = false;
+        BigDecimal currentMoney = new BigDecimal("0.00");
+        while (!isDone) {
+            System.out.println("Please place cash into machine, $1, $2, $5, " +
+                    "and $10 increments ONLY: ");
+            Scanner purchaseInput = new Scanner(System.in);
+            BigDecimal one = new BigDecimal("1");
+            BigDecimal two = new BigDecimal("2");
+            BigDecimal five = new BigDecimal("5");
+            BigDecimal ten = new BigDecimal("10");
+            BigDecimal enteredMoney = new BigDecimal(purchaseInput.nextLine());
+            if (enteredMoney.equals(one) || enteredMoney.equals(two) ||
+                    enteredMoney.equals(five) || enteredMoney.equals(ten)) {
+                currentMoney = currentMoney.add(enteredMoney);
+                System.out.println("Your current total is: " + currentMoney);
+                System.out.println("Are you done entering money? (Y/N)");
+                String exitOrNot = purchaseInput.nextLine();
+                if (exitOrNot.toLowerCase().equals("y")) {
+                    isDone = true;
+                }
+
+            }
+
+
+        }
+        return currentMoney;
+    }
+
+
 }
