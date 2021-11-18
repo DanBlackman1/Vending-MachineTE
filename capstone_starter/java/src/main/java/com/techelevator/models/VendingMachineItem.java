@@ -17,6 +17,41 @@ public abstract class VendingMachineItem {
 
     }
 
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public void setSound(String sound) {
+        this.sound = sound;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public int getStockAmount() {
+        return stockAmount;
+    }
+
+    public void setStockAmount(int stockAmount) {
+        this.stockAmount = stockAmount;
+    }
 
     public abstract String getSound();
 }

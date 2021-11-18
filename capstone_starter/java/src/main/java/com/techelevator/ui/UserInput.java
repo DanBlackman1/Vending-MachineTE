@@ -46,6 +46,36 @@ public class UserInput
 
     }
 
+    public static String getPurchaseScreen()
+    {
+        System.out.println("What would you like to do?");
+        System.out.println();
+
+        System.out.println("1) Feed Money");
+        System.out.println("2) Select Product");
+        System.out.println("3) Finish Transaction");
+
+
+        // call bigdecimal money calc method
+        System.out.println();
+        System.out.print("Current Money Provided: ");
+
+        String selectedOption = scanner.nextLine();
+        String option = selectedOption.trim().toLowerCase();
+
+        switch (option) {
+            case "1":
+                return "Feed Money";
+            case "2":
+                return "Select Product";
+            case "3":
+                return "Finish Transaction";
+            default:
+                return "";
+        }
+
+    }
+
     public static void loadList(List<VendingMachineItem> vendingMachineItemList){
         File inputFile = new File("vendingmachine.csv");
         try(Scanner inputScanner = new Scanner(inputFile)) {
@@ -53,16 +83,16 @@ public class UserInput
                 String line = inputScanner.nextLine();
                 String[] lineArray = line.split("\\|");
                 if(lineArray[3].contains("Chip")){
-                    Chips chips = new Chips(lineArray[0], lineArray[1], new BigDecimal (Double.parseDouble(lineArray[2])));
+                    Chips chips = new Chips(lineArray[0], lineArray[1], new BigDecimal (lineArray[2]));
                     vendingMachineItemList.add(chips);
                 } else if(lineArray[3].equals("Candy")){
-                    Candy candy = new Candy(lineArray[0], lineArray[1], new BigDecimal (Double.parseDouble(lineArray[2])));
+                    Candy candy = new Candy(lineArray[0], lineArray[1], new BigDecimal (lineArray[2]));
                     vendingMachineItemList.add(candy);
                 } else if(lineArray[3].equals("Drink")){
-                    Beverage beverage = new Beverage(lineArray[0], lineArray[1], new BigDecimal( (Double.parseDouble(lineArray[2]))));
+                    Beverage beverage = new Beverage(lineArray[0], lineArray[1], new BigDecimal(lineArray[2]));
                     vendingMachineItemList.add(beverage);
                 } else if(lineArray[3].equals("Gum")){
-                    Gum gum = new Gum(lineArray[0], lineArray[1], new BigDecimal((Double.parseDouble(lineArray[2]))));
+                    Gum gum = new Gum(lineArray[0], lineArray[1], new BigDecimal(lineArray[2]));
                     vendingMachineItemList.add(gum);
                 }
             }
