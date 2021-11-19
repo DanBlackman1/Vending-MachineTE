@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -42,6 +43,7 @@ public class UserInput
             case "3":
                 return "exit";
             default:
+                System.out.println("Incorrect input, please try again.");
                 return "";
         }
 
@@ -59,9 +61,9 @@ public class UserInput
 
 
         System.out.println();
-        System.out.print("Current Money Provided: " + currentMoney);
+        System.out.println("Current Money Provided: " + currentMoney);
 
-        System.out.print("Please select an option:" );
+        System.out.print("Please select an option: " );
         String selectedOption = scanner.nextLine();
         String option = selectedOption.trim().toLowerCase();
 
@@ -73,6 +75,7 @@ public class UserInput
             case "3":
                 return "Finish Transaction";
             default:
+                System.out.println("Incorrect input, please try again");
                 return "";
         }
 
@@ -105,7 +108,7 @@ public class UserInput
         }
     }
 
-    public static BigDecimal addMoney(String purchaseChoice) {
+    public static BigDecimal addMoney() {
         boolean isDone = false;
         BigDecimal currentMoney = new BigDecimal("0.00");
         while (!isDone) {
@@ -137,16 +140,18 @@ public class UserInput
     public static BigDecimal selectProduct(List<VendingMachineItem> vendingMachineItemList, BigDecimal currentMoney){
 
         System.out.print("Please enter the product code of what you want: ");
-        Scanner userInput = new Scanner(System.in);
-        String productCode = userInput.nextLine();
+
+        String productCode = scanner.nextLine();
         boolean isFound = false;
         for (int i = 0; i < vendingMachineItemList.size() && !isFound; i++) {
-            if(productCode.equals(vendingMachineItemList.get(i).getPosition())){
-                if(productCode.equals(vendingMachineItemList.get(i).getPosition()) && vendingMachineItemList.get(i).getStockAmount() == 0){
-                    System.out.print("Item is sold out!");
+            if(productCode.toLowerCase().equals(vendingMachineItemList.get(i).getPosition().toLowerCase())){
+                if(productCode.toLowerCase().equals(vendingMachineItemList.get(i).getPosition().toLowerCase()) && vendingMachineItemList.get(i).getStockAmount() == 0){
+                    System.out.println("Item is sold out!");
+                    System.out.println();
                     UserInput.getPurchaseScreen(currentMoney);
                     isFound = true;
-                } else if(productCode.equals(vendingMachineItemList.get(i).getPosition())){
+                } else if(productCode.toLowerCase().equals(vendingMachineItemList.get(i).getPosition().toLowerCase()) &&
+                currentMoney.compareTo(vendingMachineItemList.get(i).getPrice()) >= 0){
                     vendingMachineItemList.get(i).oneLessStockAmount();
                     Logger logger = new Logger("vendingLog.txt");
                     logger.writeSameLine(">" + UserOutput.getLocalDateTime() +" " +
@@ -155,6 +160,10 @@ public class UserInput
                     logger.write(" \\$" + currentMoney);
                     System.out.println(vendingMachineItemList.get(i).getProductName() + " " + vendingMachineItemList.get(i).getPrice() + " " + currentMoney );
                     System.out.println(vendingMachineItemList.get(i).getSound());
+                    isFound = true;
+                } else if (productCode.toLowerCase().equals(vendingMachineItemList.get(i).getPosition().toLowerCase()) &&
+                        currentMoney.compareTo(vendingMachineItemList.get(i).getPrice()) < 0) {
+                    System.out.println("Please return to Feed Money to increase your balance, then try again.");
                     isFound = true;
                 }
             }
@@ -168,5 +177,6 @@ public class UserInput
 
         return currentMoney;
     }
+
 
 }

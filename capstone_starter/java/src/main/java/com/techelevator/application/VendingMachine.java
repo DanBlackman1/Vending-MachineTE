@@ -41,7 +41,7 @@ public class VendingMachine
 
                     Logger logger = new Logger("vendingLog.txt");
                     logger.writeSameLine(">" + UserOutput.getLocalDateTime() +" " + purchaseChoice.toUpperCase() + ": \\$" +  currentMoney);
-                    currentMoney = UserInput.addMoney(purchaseChoice);
+                    currentMoney = UserInput.addMoney();
                     logger.write(" \\$" + currentMoney);
 
                 } else if (purchaseChoice.equals("Select Product")) {
@@ -68,6 +68,7 @@ public class VendingMachine
                 System.out.println("Good Bye!");
                 break;
             }
+
         }
     }
     

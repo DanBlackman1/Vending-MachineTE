@@ -71,7 +71,7 @@ public class UserOutput
             }
 
             String yourChange = "Your change is " + quarterCounter + " quarters, " + dimeCounter +
-                    " dimes, and " + nickelCounter + " mickels";
+                    " dimes, and " + nickelCounter + " nickels";
             System.out.println(yourChange);
         } else {
             System.out.println("You have no change. Thank you.");
