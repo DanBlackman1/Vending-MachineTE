@@ -3,6 +3,10 @@ package com.techelevator.ui;
 import com.techelevator.models.VendingMachineItem;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -75,6 +79,19 @@ public class UserOutput
 
         return currentMoney;
 
+    }
+
+    public static String getLocalDateTime(){
+       DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+       LocalDate localDate = LocalDate.now();
+       String dateString = dateFormatter.format(localDate);
+
+
+       DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
+        LocalTime localTime = LocalTime.now();
+        String timeString = timeFormatter.format(localTime);
+
+        return dateString + " " + timeString;
     }
 
 }

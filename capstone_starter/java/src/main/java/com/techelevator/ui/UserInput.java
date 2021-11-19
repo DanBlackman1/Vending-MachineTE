@@ -148,7 +148,11 @@ public class UserInput
                     isFound = true;
                 } else if(productCode.equals(vendingMachineItemList.get(i).getPosition())){
                     vendingMachineItemList.get(i).oneLessStockAmount();
+                    Logger logger = new Logger("vendingLog.txt");
+                    logger.writeSameLine(">" + UserOutput.getLocalDateTime() +" " +
+                            vendingMachineItemList.get(i).getProductName() + " " + vendingMachineItemList.get(i).getPosition() + " \\$" +  currentMoney);
                     currentMoney = currentMoney.subtract(vendingMachineItemList.get(i).getPrice());
+                    logger.write(" \\$" + currentMoney);
                     System.out.println(vendingMachineItemList.get(i).getProductName() + " " + vendingMachineItemList.get(i).getPrice() + " " + currentMoney );
                     System.out.println(vendingMachineItemList.get(i).getSound());
                     isFound = true;
