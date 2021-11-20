@@ -94,4 +94,18 @@ public class UserOutput
         return dateString + " " + timeString;
     }
 
+    public static String getSalesDateTime(){
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMddyyyy");
+        LocalDate localDate = LocalDate.now();
+        String dateString = dateFormatter.format(localDate);
+
+
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hhmmssa");
+        LocalTime localTime = LocalTime.now();
+        String timeString = timeFormatter.format(localTime);
+
+        return dateString + timeString;
+
+    }
+
 }

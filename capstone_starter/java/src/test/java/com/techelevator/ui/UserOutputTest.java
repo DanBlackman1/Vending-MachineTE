@@ -14,16 +14,6 @@ import static org.junit.Assert.*;
 public class UserOutputTest {
 
 
-
-    @Test
-    public void displayList_if_stock_out() {
-        List<VendingMachineItem> testList = new ArrayList<>();
-        Chips testChip = new Chips("A1", "Testiest Chips!", new BigDecimal("1.00"));
-        testChip.setStockAmount(0);
-        testList.add(testChip);
-
-    }
-
     @Test
     public void getChange_sets_Balance_to_Zero() {
         UserOutput test = new UserOutput();
@@ -37,6 +27,15 @@ public class UserOutputTest {
     }
 
     @Test
-    public void getLocalDateTime() {
+    public void getChange_sets_Balance_to_odd_ammount_if_not_divisible_by_5() {
+        UserOutput test = new UserOutput();
+        BigDecimal currentMoney = new BigDecimal("5.37");
+
+        BigDecimal expected = new BigDecimal("0.02");
+        BigDecimal actual = test.getChange(currentMoney);
+
+        Assert.assertEquals(expected, actual);
+
     }
+
 }

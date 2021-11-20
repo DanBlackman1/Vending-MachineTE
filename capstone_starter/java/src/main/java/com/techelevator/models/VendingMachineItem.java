@@ -8,13 +8,19 @@ public abstract class VendingMachineItem {
     private String sound;
     private String position;
     private int stockAmount;
+    private int totalSold;
 
     public VendingMachineItem(String position, String productName, BigDecimal price){
         this.position = position;
         this.productName = productName;
         this.price = price;
         stockAmount = 5;
+        totalSold = 0;
 
+    }
+
+    public int getTotalSold() {
+        return totalSold;
     }
 
     public String getProductName() {
@@ -27,6 +33,10 @@ public abstract class VendingMachineItem {
 
     public BigDecimal getPrice() {
         return price;
+    }
+
+    public void setTotalSold(int totalSold) {
+        this.totalSold = totalSold;
     }
 
     public void setPrice(BigDecimal price) {

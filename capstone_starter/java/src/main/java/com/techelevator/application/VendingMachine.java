@@ -30,7 +30,7 @@ public class VendingMachine
 
             if(choice.equals("display"))
             {
-                // display the vending machine slots
+
                 UserOutput.displayList(vendingMachineItemList);
 
             }
@@ -40,33 +40,24 @@ public class VendingMachine
 
                 if (purchaseChoice.equals("Feed Money")) {
 
-                    Logger logger = new Logger("vendingLog.txt");
-                    logger.writeSameLine(">" + UserOutput.getLocalDateTime() +" " + purchaseChoice.toUpperCase() + ": \\$" +  currentMoney);
-                    currentMoney = UserInput.addMoneyLoop();
-                    logger.write(" \\$" + currentMoney);
+                    currentMoney = feedMoney(currentMoney, purchaseChoice);
 
                 } else if (purchaseChoice.equals("Select Product")) {
 
-                    UserOutput.displayList(vendingMachineItemList);
-                    System.out.println();
-                    String productCode = UserInput.selectProductOption();
-                    currentMoney =  selectProduct(vendingMachineItemList, currentMoney, productCode);
-
-
-
+                    currentMoney = selectProductActions(currentMoney, vendingMachineItemList);
 
                 } else if (purchaseChoice.equals("Finish Transaction")) {
 
-                    Logger logger = new Logger("vendingLog.txt");
-                    logger.writeSameLine(">" + UserOutput.getLocalDateTime() +" " + "GIVE CHANGE" + ": \\$" +  currentMoney);
-                    currentMoney = UserOutput.getChange(currentMoney);
-                    logger.write(" \\$" + currentMoney);
+                    currentMoney = finishTransActions(currentMoney);
+
                 }
 
             }
             else if(choice.equals("exit"))
             {
-                System.out.println("Good Bye!");
+
+                toExit(vendingMachineItemList);
+
                 break;
             }
 
@@ -91,6 +82,7 @@ public class VendingMachine
                             vendingMachineItemList.get(i).getProductName() + " " + vendingMachineItemList.get(i).getPosition() + " \\$" +  currentMoney);
                     currentMoney = currentMoney.subtract(vendingMachineItemList.get(i).getPrice());
                     logger.write(" \\$" + currentMoney);
+                    vendingMachineItemList.get(i).setTotalSold(vendingMachineItemList.get(i).getTotalSold() + 1);
                     System.out.println(vendingMachineItemList.get(i).getProductName() + " " + vendingMachineItemList.get(i).getPrice() + " " + currentMoney );
                     System.out.println(vendingMachineItemList.get(i).getSound());
                     isFound = true;
@@ -113,22 +105,15 @@ public class VendingMachine
 
     public static BigDecimal addMoney(String cashAmount, BigDecimal currentMoney){
 
-        boolean isDone = false;
-
-
-            BigDecimal one = new BigDecimal("1");
-            BigDecimal two = new BigDecimal("2");
-            BigDecimal five = new BigDecimal("5");
-            BigDecimal ten = new BigDecimal("10");
-            BigDecimal enteredMoney = new BigDecimal(cashAmount);
+        BigDecimal one = new BigDecimal("1");
+        BigDecimal two = new BigDecimal("2");
+        BigDecimal five = new BigDecimal("5");
+        BigDecimal ten = new BigDecimal("10");
+        BigDecimal enteredMoney = new BigDecimal(cashAmount);
             if (enteredMoney.equals(one) || enteredMoney.equals(two) ||
                     enteredMoney.equals(five) || enteredMoney.equals(ten)) {
                 currentMoney = currentMoney.add(enteredMoney);
                 System.out.println("Your current total is: " + currentMoney);
-
-
-
-
         }
         return currentMoney;
     }
@@ -158,5 +143,41 @@ public class VendingMachine
             System.out.println("Error reading file!");
             System.exit(1);
         }
+    }
+
+    public static BigDecimal feedMoney(BigDecimal currentMoney, String purchaseChoice) {
+        Logger logger = new Logger("vendingLog.txt");
+        logger.writeSameLine(">" + UserOutput.getLocalDateTime() +" " + purchaseChoice.toUpperCase() + ": \\$" +  currentMoney);
+        currentMoney = UserInput.addMoneyLoop();
+        logger.write(" \\$" + currentMoney);
+        return currentMoney;
+    }
+
+    public static BigDecimal selectProductActions(BigDecimal currentMoney, List<VendingMachineItem> vendingMachineItemList) {
+        UserOutput.displayList(vendingMachineItemList);
+        System.out.println();
+        String productCode = UserInput.selectProductOption();
+        currentMoney =  selectProduct(vendingMachineItemList, currentMoney, productCode);
+        return currentMoney;
+    }
+
+    public static BigDecimal finishTransActions(BigDecimal currentMoney) {
+
+        Logger logger = new Logger("vendingLog.txt");
+        logger.writeSameLine(">" + UserOutput.getLocalDateTime() +" " + "GIVE CHANGE" + ": \\$" +  currentMoney);
+        currentMoney = UserOutput.getChange(currentMoney);
+        logger.write(" \\$" + currentMoney);
+        return currentMoney;
+
+    }
+
+    public static void toExit(List<VendingMachineItem> vendingMachineItemList) {
+
+        System.out.println("Good Bye!");
+        Logger logger = new Logger("vendingLog.txt");
+        Logger salesLogger = new Logger(UserOutput.getSalesDateTime() + "salesReport.txt");
+        salesLogger.writeSales(vendingMachineItemList);
+        logger.write(">\\`\\`\\`");
+
     }
 }
