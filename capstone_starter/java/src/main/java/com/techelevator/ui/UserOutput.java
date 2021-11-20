@@ -39,11 +39,11 @@ public class UserOutput
     public static void displayList(List<VendingMachineItem> vendingMachineItemList) {
         for (VendingMachineItem item : vendingMachineItemList) {
             if (item.getStockAmount() > 0) {
-                System.out.printf("%-15s %-13s %11s %1.2f %15s %15s\n", item.getPosition(),
+                System.out.printf("%-10s %-20s %2s %1.2f %8s %10s\n", item.getPosition(),
                         item.getProductName(), "$", item.getPrice(), item.getStockAmount(), "Available");
 
             } else {
-                System.out.printf("%-15s %-13s %11s %1.2f %15s\n", item.getPosition(),
+                System.out.printf("%-10s %-20s %2s %1.2f %15s\n", item.getPosition(),
                         item.getProductName(), "$", item.getPrice(), "SOLD OUT");
             }
         }

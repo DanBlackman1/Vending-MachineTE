@@ -61,7 +61,7 @@ public class UserInput
 
 
         System.out.println();
-        System.out.println("Current Money Provided: " + currentMoney);
+        System.out.println("Current Money Provided: \\$" + currentMoney);
 
         System.out.print("Please select an option: " );
         String selectedOption = scanner.nextLine();
