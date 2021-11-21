@@ -36,21 +36,8 @@ public class VendingMachine
             }
             else if(choice.equals("purchase"))
             {
-                String purchaseChoice = UserInput.getPurchaseScreen(currentMoney);
 
-                if (purchaseChoice.equals("Feed Money")) {
-
-                    currentMoney = feedMoney(currentMoney, purchaseChoice);
-
-                } else if (purchaseChoice.equals("Select Product")) {
-
-                    currentMoney = selectProductActions(currentMoney, vendingMachineItemList);
-
-                } else if (purchaseChoice.equals("Finish Transaction")) {
-
-                    currentMoney = finishTransActions(currentMoney);
-
-                }
+               currentMoney = purchasingLoop(currentMoney, vendingMachineItemList);
 
             }
             else if(choice.equals("exit"))
@@ -72,7 +59,6 @@ public class VendingMachine
                 if(productCode.toLowerCase().equals(vendingMachineItemList.get(i).getPosition().toLowerCase()) && vendingMachineItemList.get(i).getStockAmount() == 0){
                     System.out.println("Item is sold out!");
                     System.out.println();
-                    UserInput.getPurchaseScreen(currentMoney);
                     isFound = true;
                 } else if(productCode.toLowerCase().equals(vendingMachineItemList.get(i).getPosition().toLowerCase()) &&
                         currentMoney.compareTo(vendingMachineItemList.get(i).getPrice()) >= 0){
@@ -96,7 +82,6 @@ public class VendingMachine
 
         if(isFound == false){
             System.out.println("Product code does not exist!");
-            UserInput.getPurchaseScreen(currentMoney);
         }
 
 
@@ -181,4 +166,28 @@ public class VendingMachine
         logger.write(">\\`\\`\\`");
 
     }
+
+    public static BigDecimal purchasingLoop(BigDecimal currentMoney, List<VendingMachineItem> vendingMachineItemList) {
+
+        boolean isPurchasingDone = false;
+        while (!isPurchasingDone) {
+            String purchaseChoice = UserInput.getPurchaseScreen(currentMoney);
+
+            if (purchaseChoice.equals("Feed Money")) {
+
+                currentMoney = feedMoney(currentMoney, purchaseChoice);
+
+            } else if (purchaseChoice.equals("Select Product")) {
+
+                currentMoney = selectProductActions(currentMoney, vendingMachineItemList);
+
+            } else if (purchaseChoice.equals("Finish Transaction")) {
+
+                currentMoney = finishTransActions(currentMoney);
+                isPurchasingDone = true;
+            }
+        }
+        return currentMoney;
+    }
+
 }

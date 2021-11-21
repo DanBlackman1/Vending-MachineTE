@@ -51,7 +51,7 @@ public class UserInput
 
     public static String getPurchaseScreen(BigDecimal currentMoney)
     {
-        System.out.println("What would you like to do?");
+        System.out.println("\nWhat would you like to do?");
         System.out.println();
 
         System.out.println("1) Feed Money");
